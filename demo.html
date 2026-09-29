@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AcquireIQ — Institutional M&A Intelligence</title>
+<style>
+  @font-face{
+    font-family:'Sora';
+    src:url('https://fonts.gstatic.com/s/sora/v12/xMQXuall5N6v4BO3qOvk.woff2') format('woff2');
+    font-weight:100 900;font-style:normal;font-display:block;
+  }
+  :root{
+    --cover:max(calc(100vw / 1536), calc(100vh / 1024));
+    --fit:calc(100vh / 910);
+    --u:min(var(--cover), var(--fit));
+    --blur:calc(var(--u)*26);
+    --hairline:max(1px, calc(var(--u)*1.6));
+    --ink:#ffffff; --sub:#a2a9b8; --nav:#fbfdff; --foot:#f4f8fd;
+    --hair:rgba(196,214,232,.72); --chev:rgba(214,232,250,.90);
+    --navdim:#e8ecf0; --feat:#e2ebf5;
+    --veil:6,10,18;
+  }
+  html,body{height:100%;background:#02060f;overflow:hidden;margin:0;padding:0}
+  body{font-family:'Sora',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);
+       -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+  a{color:inherit;text-decoration:none;cursor:pointer} li{list-style:none}
+  
+  .art{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;background:#03060c}
+  .veil{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(140% 60% at 50% 40%, rgba(var(--veil),.16) 0%, rgba(var(--veil),.057) 50%, rgba(var(--veil),0) 100%), linear-gradient(180deg, rgba(var(--veil),0) 45%, rgba(var(--veil),.10) 100%);}
+  .bar,.hero,.foot{position:fixed;z-index:1}
+  
+  .bar,.hero,.foot{left:50%;width:calc(var(--u)*1536);transform:translateX(-50%)}
+  .bar{top:0;height:calc(var(--u)*120);display:flex;align-items:center;justify-content:space-between;padding:0 calc(var(--u)*100);box-sizing:border-box;}
+  .brand{display:flex;align-items:center;gap:calc(var(--u)*10)}
+  .brand svg{width:calc(var(--u)*23);height:calc(var(--u)*17);fill:var(--ink);display:block}
+  #word{font-family:'Sora';font-weight:531;font-size:calc(var(--u)*23.4);letter-spacing:calc(var(--u)*4.8);color:var(--ink)}
+  
+  .menu{display:flex;gap:calc(var(--u)*35);align-items:center}
+  .menu a{font-family:'Sora';font-weight:506;font-size:calc(var(--u)*13.5);color:var(--nav);display:flex;align-items:center;gap:calc(var(--u)*6)}
+  .caret{width:calc(var(--u)*9);height:calc(var(--u)*6);fill:none;stroke:var(--nav);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+  
+  .login{font-family:'Sora';font-weight:506;font-size:calc(var(--u)*13.5);color:var(--nav);display:flex;align-items:center;gap:calc(var(--u)*8)}
+  .navarrow{width:calc(var(--u)*10);height:calc(var(--u)*9);fill:none;stroke:var(--nav);stroke-width:1.2}
+  
+  .pill{border:var(--hairline) solid var(--hair);border-radius:999px;padding:calc(var(--u)*10) calc(var(--u)*20);font-family:'Sora';font-weight:581;font-size:calc(var(--u)*13.5);color:var(--navdim)}
+
+  .hero{top:50%;height:calc(var(--u)*1024);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center}
+  .title{position:absolute;top:calc(var(--u)*285);width:100%;margin:0}
+  .title span{display:block;font-family:'Sora';font-weight:424;font-size:calc(var(--u)*46.8);line-height:1.15}
+  #h1a{letter-spacing:calc(var(--u)*0.532)}
+  #h1b{letter-spacing:calc(var(--u)*-0.398);margin-top:calc(var(--u)*10)}
+
+  .sub{position:absolute;top:calc(var(--u)*408);width:100%;margin:0}
+  .sub span{display:block;font-family:'Sora';font-weight:446;font-size:calc(var(--u)*20.6);color:var(--sub)}
+  #sub2{font-size:calc(var(--u)*19.1);margin-top:calc(var(--u)*6)}
+
+  .cta-group{position:absolute;top:calc(var(--u)*555);left:50%;transform:translateX(-50%);display:flex;gap:15px;align-items:center;}
+  
+  .cta{border-radius:999px;padding:calc(var(--u)*14) calc(var(--u)*32);display:flex;align-items:center;gap:calc(var(--u)*12);font-family:'Sora';font-weight:497;font-size:calc(var(--u)*20);color:var(--ink);background:linear-gradient(180deg, rgba(6,12,22,0) 45%, rgba(6,12,22,.28) 100%), rgba(255,255,255,.07);backdrop-filter:blur(var(--blur));border:1px solid rgba(255,255,255,0.2);cursor:pointer;}
+  .cta.primary{background:linear-gradient(135deg, rgba(59,130,246,0.4), rgba(147,51,234,0.4));border-color:rgba(96,165,250,0.5);}
+  .cta .arrow{width:calc(var(--u)*16);height:calc(var(--u)*11);fill:none;stroke:var(--ink);stroke-width:1.6}
+
+  .feats{position:absolute;top:calc(var(--u)*718);left:50%;transform:translateX(-50%);display:flex;gap:calc(var(--u)*40);margin:0;padding:0}
+  .feats li{display:flex;align-items:center;gap:calc(var(--u)*8);font-family:'Sora';font-weight:534;font-size:calc(var(--u)*14.6);color:var(--feat);white-space:nowrap}
+  .chev{width:calc(var(--u)*11);height:calc(var(--u)*20);fill:none;stroke:var(--chev);stroke-width:1.75}
+
+  .rule{position:absolute;top:calc(var(--u)*792);left:50%;width:1px;height:calc(var(--u)*57);background:rgba(206,220,232,.92)}
+
+  .foot{bottom:0;height:calc(var(--u)*100);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'Sora';font-weight:521;font-size:calc(var(--u)*16.3);color:var(--foot)}
+  #foot2{font-size:calc(var(--u)*14);opacity:0.7;margin-top:calc(var(--u)*4)}
+
+  /* STORY DEMO MODAL STYLES */
+  #terminal-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(2, 6, 15, 0.9); backdrop-filter: blur(16px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .terminal-window {
+    width: 900px; max-width: 92vw; height: 560px;
+    background: #090e1a; border: 1px solid rgba(96, 165, 250, 0.4);
+    border-radius: 14px; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+    display: flex; flex-direction: column; overflow: hidden; font-family: monospace;
+  }
+  .terminal-header {
+    background: #111827; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #9ca3af;
+  }
+  .terminal-dots { display: flex; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ef4444; } .dot-yellow { background: #f59e0b; } .dot-green { background: #10b981; }
+  .terminal-body {
+    flex: 1; padding: 24px; overflow-y: auto; color: #34d399; font-size: 14px; line-height: 1.7; text-align: left;
+  }
+  .terminal-footer-bar {
+    padding: 14px 20px; background: #050811; border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #60a5fa;
+  }
+  .close-term { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 18px; font-weight: bold; }
+  .demo-action-btn {
+    background: #2563eb; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'Sora'; font-weight: 600; font-size: 12px; transition: background 0.2s;
+  }
+  .demo-action-btn:hover { background: #1d4ed8; }
+</style>
+</head>
+<body>
+
+<video class="art" autoplay muted loop playsinline preload="auto" aria-hidden="true" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_104303_0c6d60b2-9353-408e-9449-585108a22fb5.mp4"></video>
+<div class="veil"></div>
+
+<header class="bar">
+     <a class="brand" href="#">
+       <svg viewBox="0 0 23 17" aria-hidden="true">
+         <path d="M8.15 0.9 L4.55 0.9 L0.5 9.3 L4.1 9.3 Z"/>
+         <path d="M17.0 0 L13.4 0 L6.15 16.4 L9.75 16.4 Z"/>
+         <path d="M22.9 0 L19.3 0 L15.0 7.6 L18.6 7.6 Z"/>
+         <path d="M22.6 6.9 L19.0 6.9 L14.05 16.4 L17.65 16.4 Z"/>
+       </svg>
+       <span id="word">ACQUIREIQ</span>
+     </a>
+     <nav class="menu">
+         <a class="trigger-term" href="#"><span>Platform</span></a>
+         <a class="trigger-term" href="#"><span>Hindsight DB</span></a>
+         <a class="trigger-term" href="#"><span>Solutions</span><svg class="caret" viewBox="0 0 9 6" aria-hidden="true"><path d="M0.7 1.1 L4.5 4.6 L8.3 1.1"/></svg></a>
+     </nav>
+     <a class="login trigger-term" href="#"><span>Terminal Access</span><svg class="navarrow" viewBox="0 0 10 9" aria-hidden="true"><path d="M0 4.5 H9.1 M5.4 0.9 L9.2 4.5 L5.4 8.1"/></svg></a>
+     <a class="pill trigger-term" href="#"><span>Request Audit</span></a>
+</header>
+
+<main class="hero">
+     <h1 class="title">
+       <span id="h1a">Institutional M&A Intelligence</span>
+       <span id="h1b">Never Repeat Past Integration Debt.</span>
+     </h1>
+     <p class="sub">
+       <span id="sub1">Persistent vector memory</span>
+       <span id="sub2">for high-stakes corporate acquisitions.</span>
+     </p>
+     <div class="cta-group">
+       <a class="cta trigger-term" href="#">
+         <span>Launch manual terminal</span>
+         <svg class="arrow" viewBox="0 0 16 11" aria-hidden="true"><path d="M0 5.5 H14.6 M10.3 1.2 L14.9 5.5 L10.3 9.8"/></svg>
+       </a>
+       <a class="cta primary" id="launch-story-demo" href="#">
+         <span>? Run Automated Story Demo</span>
+       </a>
+     </div>
+     <ul class="feats">
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Persistent memory</span></li>
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Code & culture audit</span></li>
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Risk minimization</span></li>
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Automated compliance</span></li>
+     </ul>
+     <span class="rule" aria-hidden="true"></span>
+</main>
+
+<footer class="foot">
+     <span id="foot1">Trusted by elite private equity & M&A teams worldwide.</span>
+     <span id="foot2">2026 — AcquireIQ Neural Core v1.2</span>
+</footer>
+
+<!-- STORY DEMO MODAL -->
+<div id="terminal-modal">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+      </div>
+      <span id="term-title">acquireiq-autonomous-engine — active session</span>
+      <button class="close-term" id="close-btn">&times;</button>
+    </div>
+    <div class="terminal-body" id="term-output">
+      Welcome to AcquireIQ Institutional Intelligence Terminal.<br>
+      Click the button below to start the automated due diligence story walkthrough.<br>
+    </div>
+    <div class="terminal-footer-bar">
+      <span id="term-status-text">Status: Ready for simulation</span>
+      <button class="demo-action-btn" id="start-story-btn">? Play Story Walkthrough</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('terminal-modal');
+  const triggers = document.querySelectorAll('.trigger-term');
+  const storyBtn = document.getElementById('launch-story-demo');
+  const closeBtn = document.getElementById('close-btn');
+  const termOutput = document.getElementById('term-output');
+  const playStoryBtn = document.getElementById('start-story-btn');
+  const statusText = document.getElementById('term-status-text');
+
+  // Open modal normally
+  triggers.forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'flex';
+      termOutput.innerHTML = `Manual terminal initialized.<br>Type queries or click 'Play Story Walkthrough' below.<br><br>`;
+      statusText.innerText = "Status: Manual Mode Ready";
+    });
+  });
+
+  // Open modal directly with story
+  storyBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.style.display = 'flex';
+    runStorySequence();
+  });
+
+  playStoryBtn.addEventListener('click', () => {
+    runStorySequence();
+  });
+
+  closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+  window.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+
+  // Automated Story Sequence Script
+  function runStorySequence() {
+    termOutput.innerHTML = "";
+    playStoryBtn.disabled = true;
+    playStoryBtn.style.opacity = "0.5";
+    statusText.innerText = "Running Automated Due Diligence Scenario...";
+
+    const steps = [
+      { delay: 400, html: `<span style="color:#60a5fa">[STEP 1/4] Connecting to Target Corporation Data Room...</span><br>` },
+      { delay: 1200, html: `Ingesting 1,420 PDF due diligence files, git commit logs, and legacy architectural specs... <span style="color:#10b981">SUCCESS</span><br>` },
+      { delay: 2200, html: `<br><span style="color:#60a5fa">[STEP 2/4] Querying Hindsight Vector DB (Persistent Memory Layer)...</span><br>` },
+      { delay: 3000, html: `Query: <i>"Where did previous microservices migrations stall during the 2024 acquisition?"</i><br>` },
+      { delay: 3800, html: `<span style="color:#f59e0b">? Match Found: Q3_2024_Migration_Failure_PostMortem.pdf (Cosine Similarity: 0.91)</span><br>` },
+      { delay: 4600, html: `<br><span style="color:#60a5fa">[STEP 3/4] Multi-Agent AST Code & Culture Audit...</span><br>` },
+      { delay: 5400, html: `- Analyzing target monolithic repository structure... 14 critical tight-coupling flaws detected.<br>` },
+      { delay: 6200, html: `- Evaluating leadership communication transcripts... Cultural alignment index at 82%.<br>` },
+      { delay: 7000, html: `<br><span style="color:#60a5fa">[STEP 4/4] Final Risk Quantification & Synthesis...</span><br>` },
+      { delay: 7800, html: `<div style="background:rgba(239, 68, 68, 0.1); border:1px solid #ef4444; padding:12px; border-radius:6px; margin-top:8px;">
+        <strong style="color:#ef4444; font-size:15px;">?? ACQUIREIQ RISK ASSESSMENT COMPLETE</strong><br>
+        • <b>Integration Debt Score:</b> <span style="color:#f59e0b">68/100 (Moderate-High Risk)</span><br>
+        • <b>Primary Blocker:</b> Unocumented CI/CD pipeline bottlenecks mirroring 2024 failure.<br>
+        • <b>Recommendation:</b> Require target refactoring milestone before term sheet sign-off.
+      </div><br>` },
+      { delay: 8500, html: `<span style="color:#10b981; font-weight:bold;">? Story walkthrough completed successfully. This deal's blind spots have been exposed.</span>` }
+    ];
+
+    steps.forEach(step => {
+      setTimeout(() => {
+        termOutput.innerHTML += step.html;
+        termOutput.scrollTop = termOutput.scrollHeight;
+        if(step === steps[steps.length - 1]) {
+          playStoryBtn.disabled = false;
+          playStoryBtn.style.opacity = "1";
+          statusText.innerText = "Status: Story Completed";
+        }
+      }, step.delay);
+    });
+  }
+</script>
+</body>
+</html>
