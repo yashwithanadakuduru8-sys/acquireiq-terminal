@@ -3,7 +3,7 @@
 
 > **Autonomous due diligence and integration debt forensics for high-stakes corporate acquisitions.**
 
-live preview-https://superlative-sawine-3858a1.netlify.app/
+live preview-https:https://gleeful-starship-e9a49d.netlify.app/
 
 ## 💡 The Problem
 Mergers and acquisitions (M&A) fail not because of poor financial strategy, but because of **hidden integration debt**—undocumented technical debt, clashing codebases, and cultural silos buried across thousands of pages of unstructured data rooms. Traditional manual audits are too slow and miss critical red flags.
