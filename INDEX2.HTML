@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AcquireIQ — Institutional M&A Intelligence</title>
+<style>
+  @font-face{
+    font-family:'Sora';
+    src:url('https://fonts.gstatic.com/s/sora/v12/xMQXuall5N6v4BO3qOvk.woff2') format('woff2');
+    font-weight:100 900;font-style:normal;font-display:block;
+  }
+  :root{
+    --cover:max(calc(100vw / 1536), calc(100vh / 1024));
+    --fit:calc(100vh / 910);
+    --u:min(var(--cover), var(--fit));
+    --blur:calc(var(--u)*26);
+    --hairline:max(1px, calc(var(--u)*1.6));
+    --ink:#ffffff; --sub:#a2a9b8; --nav:#fbfdff; --foot:#f4f8fd;
+    --hair:rgba(196,214,232,.72); --chev:rgba(214,232,250,.90);
+    --navdim:#e8ecf0; --feat:#e2ebf5;
+    --veil:6,10,18;
+  }
+  html,body{height:100%;background:#02060f;overflow:hidden;margin:0;padding:0}
+  body{font-family:'Sora',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);
+       -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+  a{color:inherit;text-decoration:none;cursor:pointer} li{list-style:none}
+  
+  .art{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;background:#03060c}
+  .veil{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(140% 60% at 50% 40%, rgba(var(--veil),.16) 0%, rgba(var(--veil),.057) 50%, rgba(var(--veil),0) 100%), linear-gradient(180deg, rgba(var(--veil),0) 45%, rgba(var(--veil),.10) 100%);}
+  .bar,.hero,.foot{position:fixed;z-index:1}
+  
+  .bar,.hero,.foot{left:50%;width:calc(var(--u)*1536);transform:translateX(-50%)}
+  .bar{top:0;height:calc(var(--u)*120);display:flex;align-items:center;justify-content:space-between;padding:0 calc(var(--u)*100);box-sizing:border-box;}
+  .brand{display:flex;align-items:center;gap:calc(var(--u)*10)}
+  .brand svg{width:calc(var(--u)*23);height:calc(var(--u)*17);fill:var(--ink);display:block}
+  #word{font-family:'Sora';font-weight:531;font-size:calc(var(--u)*23.4);letter-spacing:calc(var(--u)*4.8);color:var(--ink)}
+  
+  .menu{display:flex;gap:calc(var(--u)*35);align-items:center}
+  .menu a{font-family:'Sora';font-weight:506;font-size:calc(var(--u)*13.5);color:var(--nav);display:flex;align-items:center;gap:calc(var(--u)*6)}
+  .caret{width:calc(var(--u)*9);height:calc(var(--u)*6);fill:none;stroke:var(--nav);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+  
+  .login{font-family:'Sora';font-weight:506;font-size:calc(var(--u)*13.5);color:var(--nav);display:flex;align-items:center;gap:calc(var(--u)*8)}
+  .navarrow{width:calc(var(--u)*10);height:calc(var(--u)*9);fill:none;stroke:var(--nav);stroke-width:1.2}
+  
+  .pill{border:var(--hairline) solid var(--hair);border-radius:999px;padding:calc(var(--u)*10) calc(var(--u)*20);font-family:'Sora';font-weight:581;font-size:calc(var(--u)*13.5);color:var(--navdim)}
+
+  .hero{top:50%;height:calc(var(--u)*1024);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center}
+  .title{position:absolute;top:calc(var(--u)*285);width:100%;margin:0}
+  .title span{display:block;font-family:'Sora';font-weight:424;font-size:calc(var(--u)*46.8);line-height:1.15}
+  #h1a{letter-spacing:calc(var(--u)*0.532)}
+  #h1b{letter-spacing:calc(var(--u)*-0.398);margin-top:calc(var(--u)*10)}
+
+  .sub{position:absolute;top:calc(var(--u)*408);width:100%;margin:0}
+  .sub span{display:block;font-family:'Sora';font-weight:446;font-size:calc(var(--u)*20.6);color:var(--sub)}
+  #sub2{font-size:calc(var(--u)*19.1);margin-top:calc(var(--u)*6)}
+
+  .cta{position:absolute;top:calc(var(--u)*555);left:50%;transform:translateX(-50%);border-radius:999px;padding:calc(var(--u)*14) calc(var(--u)*32);display:flex;align-items:center;gap:calc(var(--u)*12);font-family:'Sora';font-weight:497;font-size:calc(var(--u)*22);color:var(--ink);background:linear-gradient(180deg, rgba(6,12,22,0) 45%, rgba(6,12,22,.28) 100%), rgba(255,255,255,.07);backdrop-filter:blur(var(--blur));border:1px solid rgba(255,255,255,0.2);cursor:pointer;}
+  .cta .arrow{width:calc(var(--u)*16);height:calc(var(--u)*11);fill:none;stroke:var(--ink);stroke-width:1.6}
+
+  .feats{position:absolute;top:calc(var(--u)*718);left:50%;transform:translateX(-50%);display:flex;gap:calc(var(--u)*40);margin:0;padding:0}
+  .feats li{display:flex;align-items:center;gap:calc(var(--u)*8);font-family:'Sora';font-weight:534;font-size:calc(var(--u)*14.6);color:var(--feat);white-space:nowrap}
+  .chev{width:calc(var(--u)*11);height:calc(var(--u)*20);fill:none;stroke:var(--chev);stroke-width:1.75}
+
+  .rule{position:absolute;top:calc(var(--u)*792);left:50%;width:1px;height:calc(var(--u)*57);background:rgba(206,220,232,.92)}
+
+  .foot{bottom:0;height:calc(var(--u)*100);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'Sora';font-weight:521;font-size:calc(var(--u)*16.3);color:var(--foot)}
+  #foot2{font-size:calc(var(--u)*14);opacity:0.7;margin-top:calc(var(--u)*4)}
+
+  /* INTERACTIVE TERMINAL MODAL STYLES */
+  #terminal-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(2, 6, 15, 0.85); backdrop-filter: blur(12px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .terminal-window {
+    width: 850px; max-width: 90vw; height: 520px;
+    background: #090e1a; border: 1px solid rgba(196, 214, 232, 0.3);
+    border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    display: flex; flex-direction: column; overflow: hidden; font-family: monospace;
+  }
+  .terminal-header {
+    background: #111827; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #9ca3af;
+  }
+  .terminal-dots { display: flex; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ef4444; } .dot-yellow { background: #f59e0b; } .dot-green { background: #10b981; }
+  .terminal-body {
+    flex: 1; padding: 20px; overflow-y: auto; color: #34d399; font-size: 14px; line-height: 1.6; text-align: left;
+  }
+  .terminal-input-line {
+    display: flex; align-items: center; gap: 10px; padding: 12px 20px; background: #050811;
+    border-top: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: monospace;
+  }
+  .terminal-input-line input {
+    background: transparent; border: none; outline: none; color: #60a5fa; font-family: monospace; font-size: 14px; flex: 1;
+  }
+  .close-term { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 16px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<video class="art" autoplay muted loop playsinline preload="auto" aria-hidden="true" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_104303_0c6d60b2-9353-408e-9449-585108a22fb5.mp4"></video>
+<div class="veil"></div>
+
+<header class="bar">
+     <a class="brand" href="#">
+       <svg viewBox="0 0 23 17" aria-hidden="true">
+         <path d="M8.15 0.9 L4.55 0.9 L0.5 9.3 L4.1 9.3 Z"/>
+         <path d="M17.0 0 L13.4 0 L6.15 16.4 L9.75 16.4 Z"/>
+         <path d="M22.9 0 L19.3 0 L15.0 7.6 L18.6 7.6 Z"/>
+         <path d="M22.6 6.9 L19.0 6.9 L14.05 16.4 L17.65 16.4 Z"/>
+       </svg>
+       <span id="word">ACQUIREIQ</span>
+     </a>
+     <nav class="menu">
+         <a class="trigger-term" href="#"><span>Platform</span></a>
+         <a class="trigger-term" href="#"><span>Hindsight DB</span></a>
+         <a class="trigger-term" href="#"><span>Solutions</span><svg class="caret" viewBox="0 0 9 6" aria-hidden="true"><path d="M0.7 1.1 L4.5 4.6 L8.3 1.1"/></svg></a>
+     </nav>
+     <a class="login trigger-term" href="#"><span>Terminal Access</span><svg class="navarrow" viewBox="0 0 10 9" aria-hidden="true"><path d="M0 4.5 H9.1 M5.4 0.9 L9.2 4.5 L5.4 8.1"/></svg></a>
+     <a class="pill trigger-term" href="#"><span>Request Audit</span></a>
+</header>
+
+<main class="hero">
+     <h1 class="title">
+       <span id="h1a">Institutional M&A Intelligence</span>
+       <span id="h1b">Never Repeat Past Integration Debt.</span>
+     </h1>
+     <p class="sub">
+       <span id="sub1">Persistent vector memory</span>
+       <span id="sub2">for high-stakes corporate acquisitions.</span>
+     </p>
+     <a class="cta trigger-term" href="#">
+       <span>Launch intelligence terminal</span>
+       <svg class="arrow" viewBox="0 0 16 11" aria-hidden="true"><path d="M0 5.5 H14.6 M10.3 1.2 L14.9 5.5 L10.3 9.8"/></svg>
+     </a>
+     <ul class="feats">
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Persistent memory</span></li>
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Code & culture audit</span></li>
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Risk minimization</span></li>
+        <li><svg class="chev" viewBox="0 0 11 20"><path d="M1.15 1.15 L9.6 10 L1.15 18.85"/></svg><span>Automated compliance</span></li>
+     </ul>
+     <span class="rule" aria-hidden="true"></span>
+</main>
+
+<footer class="foot">
+     <span id="foot1">Trusted by elite private equity & M&A teams worldwide.</span>
+     <span id="foot2">2026 — AcquireIQ Terminal v1.0</span>
+</footer>
+
+<!-- INTERACTIVE MODAL POPUP -->
+<div id="terminal-modal">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+      </div>
+      <span>acquireiq-agent-v1.2 — secure-session</span>
+      <button class="close-term" id="close-btn">&times;</button>
+    </div>
+    <div class="terminal-body" id="term-output">
+      Initializing AcquireIQ Neural Core v1.2...<br>
+      Connecting to Hindsight Vector DB (Tenant: Target_Alpha)...<br>
+      <span style="color:#60a5fa">[INFO] Persistent memory layer synchronized. 1,420 vectors indexed.</span><br>
+      <span style="color:#f43f5e">[WARNING] Integration debt risk detected in target CI/CD pipelines.</span><br><br>
+      Type a command below or query target company records (e.g., <code>audit</code>, <code>vector-search</code>, <code>help</code>):<br><br>
+    </div>
+    <div class="terminal-input-line">
+      <span style="color:#60a5fa">acquireiq@terminal:~$</span>
+      <input type="text" id="term-input" placeholder="Type 'audit' or query due diligence..." autofocus>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('terminal-modal');
+  const triggers = document.querySelectorAll('.trigger-term');
+  const closeBtn = document.getElementById('close-btn');
+  const termInput = document.getElementById('term-input');
+  const termOutput = document.getElementById('term-output');
+
+  // Open modal on any main button click
+  triggers.forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'flex';
+      termInput.focus();
+    });
+  });
+
+  // Close modal
+  closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+  window.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+
+  // Interactive CLI commands for the demo!
+  termInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      const val = termInput.value.trim().toLowerCase();
+      termOutput.innerHTML += `> ${termInput.value}<br>`;
+      
+      if (val === 'audit') {
+        termOutput.innerHTML += `<span style="color:#f59e0b">[RUNNING MULTI-AGENT AUDIT...]</span><br>
+          - AST Code Parsing: Complete. 14 critical coupling flaws found.<br>
+          - Cultural Sentiment: 82% alignment score.<br>
+          - <span style="color:#10b981">Integration Debt Score: 68/100 (Moderate Risk)</span><br><br>`;
+      } else if (val === 'vector-search' || val === 'search') {
+        termOutput.innerHTML += `<span style="color:#38bdf8">[HINDSIGHT DB QUERY]</span> Searching historical archives...<br>
+          Match Found: Q3_2024_Microservices_Migration_Failure.pdf (Cosine Similarity: 0.91)<br>
+          Insight: Target's current architecture mirrors past scaling bottlenecks.<br><br>`;
+      } else if (val === 'help') {
+        termOutput.innerHTML += `Available demo commands:<br>
+          - <code>audit</code>: Run automated code and culture audit on target company.<br>
+          - <code>vector-search</code>: Query historical integration failures from vector memory.<br>
+          - <code>status</code>: Check multi-agent orchestrator health.<br>
+          - <code>clear</code>: Clear terminal history.<br><br>`;
+      } else if (val === 'status') {
+        termOutput.innerHTML += `<span style="color:#10b981">All systems operational. Vector index active. 0ms latency.</span><br><br>`;
+      } else if (val === 'clear') {
+        termOutput.innerHTML = `Terminal cleared.<br><br>`;
+      } else {
+        termOutput.innerHTML += `Executing query across vector clusters... <span style="color:#10b981">Analysis complete. No critical blocker found for '${termInput.value}'.</span><br><br>`;
+      }
+      
+      termInput.value = '';
+      termOutput.scrollTop = termOutput.scrollHeight;
+    }
+  });
+</script>
+</body>
+</html>
