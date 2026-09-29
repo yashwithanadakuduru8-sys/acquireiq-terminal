@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AcquireIQ — Institutional M&A Intelligence</title>
+<style>
+  @font-face{
+    font-family:'Sora';
+    src:url('https://fonts.gstatic.com/s/sora/v12/xMQXuall5N6v4BO3qOvk.woff2') format('woff2');
+    font-weight:100 900;font-style:normal;font-display:block;
+  }
+  :root{
+    --cover:max(calc(100vw / 1536), calc(100vh / 1024));
+    --fit:calc(100vh / 910);
+    --u:min(var(--cover), var(--fit));
+    --blur:calc(var(--u)*26);
+    --hairline:max(1px, calc(var(--u)*1.6));
+    --ink:#ffffff; --sub:#a2a9b8; --foot:#f4f8fd;
+    --hair:rgba(196,214,232,.72);
+    --veil:6,10,18;
+  }
+  html,body{height:100%;background:#02060f;overflow:hidden;margin:0;padding:0}
+  body{font-family:'Sora',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);
+       -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+  a{color:inherit;text-decoration:none;cursor:pointer} li{list-style:none}
+  
+  .art{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;background:#03060c}
+  .veil{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(140% 60% at 50% 40%, rgba(var(--veil),.16) 0%, rgba(var(--veil),.057) 50%, rgba(var(--veil),0) 100%), linear-gradient(180deg, rgba(var(--veil),0) 45%, rgba(var(--veil),.10) 100%);}
+  .bar,.hero,.foot{position:fixed;z-index:1}
+  
+  .bar,.hero,.foot{left:50%;width:calc(var(--u)*1536);transform:translateX(-50%)}
+  
+  /* Minimal Top Bar */
+  .bar{top:0;height:calc(var(--u)*100);display:flex;align-items:center;justify-content:space-between;padding:0 calc(var(--u)*100);box-sizing:border-box;}
+  .brand{display:flex;align-items:center;gap:calc(var(--u)*12)}
+  .brand svg{width:calc(var(--u)*26);height:calc(var(--u)*20);fill:var(--ink);display:block}
+  #word{font-family:'Sora';font-weight:600;font-size:calc(var(--u)*26);letter-spacing:calc(var(--u)*5);color:var(--ink)}
+
+  .launch-btn{border-radius:999px;padding:calc(var(--u)*10) calc(var(--u)*24);font-family:'Sora';font-weight:600;font-size:calc(var(--u)*13.5);color:#fff;background:rgba(59,130,246,0.3);border:1px solid rgba(96,165,250,0.4);backdrop-filter:blur(10px);transition:background 0.2s;}
+  .launch-btn:hover{background:rgba(59,130,246,0.5);}
+
+  /* Centered Hero with Quote & Stats */
+  .hero{top:50%;height:calc(var(--u)*800);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center}
+  
+  .title{position:absolute;top:calc(var(--u)*80);width:100%;margin:0}
+  .title span{display:block;font-family:'Sora';font-weight:450;font-size:calc(var(--u)*48);line-height:1.2}
+  #h1b{letter-spacing:calc(var(--u)*-0.4);margin-top:calc(var(--u)*8);color:#93c5fd;font-weight:600;}
+
+  /* Statistics Grid */
+  .stats-container{position:absolute;top:calc(var(--u)*330);display:flex;gap:calc(var(--u)*50);width:100%;justify-content:center;}
+  .stat-box{background:rgba(8,14,26,0.6);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(var(--blur));padding:calc(var(--u)*20) calc(var(--u)*35);border-radius:14px;text-align:center;min-width:calc(var(--u)*220);}
+  .stat-num{font-family:'Sora';font-weight:700;font-size:calc(var(--u)*32);color:#34d399;margin-bottom:calc(var(--u)*6);}
+  .stat-label{font-family:'Sora';font-weight:450;font-size:calc(var(--u)*13);color:var(--sub);letter-spacing:0.5px;}
+
+  /* Bottom CTA */
+  .cta-area{position:absolute;top:calc(var(--u)*540);display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*15);}
+  .cta-main{border-radius:999px;padding:calc(var(--u)*16) calc(var(--u)*40);font-family:'Sora';font-weight:600;font-size:calc(var(--u)*18);color:#fff;background:linear-gradient(135deg, rgba(37,99,235,0.8), rgba(147,51,234,0.8));border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(37,99,235,0.4);cursor:pointer;transition:transform 0.2s;}
+  .cta-main:hover{transform:scale(1.03);}
+
+  .foot{bottom:0;height:calc(var(--u)*80);display:flex;align-items:center;justify-content:center;font-family:'Sora';font-weight:500;font-size:calc(var(--u)*13);color:var(--foot);opacity:0.6;}
+</style>
+</head>
+<body>
+
+<video class="art" autoplay muted loop playsinline preload="auto" aria-hidden="true" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_104303_0c6d60b2-9353-408e-9449-585108a22fb5.mp4"></video>
+<div class="veil"></div>
+
+<!-- Minimal Header with Logo and Fast Access -->
+<header class="bar">
+     <a class="brand" href="landing.html">
+       <svg viewBox="0 0 23 17" aria-hidden="true">
+         <path d="M8.15 0.9 L4.55 0.9 L0.5 9.3 L4.1 9.3 Z"/>
+         <path d="M17.0 0 L13.4 0 L6.15 16.4 L9.75 16.4 Z"/>
+         <path d="M22.9 0 L19.3 0 L15.0 7.6 L18.6 7.6 Z"/>
+         <path d="M22.6 6.9 L19.0 6.9 L14.05 16.4 L17.65 16.4 Z"/>
+       </svg>
+       <span id="word">ACQUIREIQ</span>
+     </a>
+     <a class="launch-btn" href="terminal.html">Open Terminal &rarr;</a>
+</header>
+
+<!-- Hero Section with Quote & Clean Statistics -->
+<main class="hero">
+     <h1 class="title">
+       <span id="h1a">"Never Repeat Past Integration Debt."</span>
+       <span id="h1b">Institutional intelligence for high-stakes corporate acquisitions.</span>
+     </h1>
+
+     <div class="stats-container">
+       <div class="stat-box">
+         <div class="stat-num">1,420+</div>
+         <div class="stat-label">Data Room Files Ingested</div>
+       </div>
+       <div class="stat-box">
+         <div class="stat-num">0.91</div>
+         <div class="stat-label">Vector Match Accuracy</div>
+       </div>
+       <div class="stat-box">
+         <div class="stat-num">&lt; 3 Sec</div>
+         <div class="stat-label">AST Risk Quantification</div>
+       </div>
+     </div>
+
+     <div class="cta-area">
+       <a class="cta-main" href="terminal.html">
+         ? Launch Live Risk Terminal
+       </a>
+     </div>
+</main>
+
+<footer class="foot">
+     <span>AcquireIQ Neural Core v1.2 — Autonomous M&A Forensics</span>
+</footer>
+
+</body>
+</html>
